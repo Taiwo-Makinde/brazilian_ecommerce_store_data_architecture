@@ -42,9 +42,9 @@ for name in raw.split(","):                                                 # I 
 
 DATASET_PATHS = []
 
-for name in DATASET_NAMES:
-    full_path = os.path.join(BRAZILIAN_DATA_DOWNLOAD_PATH, name)
-    DATASET_PATHS.append(full_path)
+for name in DATASET_NAMES:                                                  # I iterate through the dataset names
+    full_path = os.path.join(BRAZILIAN_DATA_DOWNLOAD_PATH, name)            # I join each of the download path with the dataset names contemplating that it would form a path
+    DATASET_PATHS.append(full_path)                                         # I append the path to the DATASET_PATH list because it is within a loop, this happens for each of the paths. 
 
 # Configuration for extraction step 
 EXTRACT_PATH = BRAZILIAN_DATA_DOWNLOAD_PATH

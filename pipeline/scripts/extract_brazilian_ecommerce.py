@@ -33,7 +33,7 @@ def download_brazilian_ecommerce_dataset(config, retries = config.MAX_RETRIES):
     # I call the all_data_exists function to check if all data is present and returns True, that is, complete end this function without continuing the code, and move to the next.
     if all_data_exists(config):
         print("All datasets already exist. Skipping download...")
-        return True 
+        return True                                                     # Completes the code
 
 
     # 2. Check if Kaggle credentials are available 

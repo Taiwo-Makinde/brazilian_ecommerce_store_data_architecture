@@ -128,7 +128,7 @@ def read_data_frames(config) -> dict[str, pd.Dataframe]:
 
     try:
         # Dict 
-        brazilian_ecommerce_dataframes_dict = {}
+        brazilian_ecommerce_dataframes_dict = {}                                                              # Empty dictionary which we would append keys and values to later
 
         brazilian_ecommerce_dataframes_dict ["customer_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_CUSTOMER_DATASET))
         brazilian_ecommerce_dataframes_dict ["geolocation_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_GEOLOCATION_DATASET))

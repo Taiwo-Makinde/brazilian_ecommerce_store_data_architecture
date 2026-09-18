@@ -116,6 +116,9 @@ def download_brazilian_ecommerce_dataset(config, retries = config.MAX_RETRIES):
 
 
 def read_data_frames(config) -> dict[str, pd.Dataframe]:
+    """
+    A function that takes in the configuration file as a parameter and returns a dictionary containing dataframes.
+    """
 
     # Files do not exist, the code raises an error.
     if not download_brazilian_ecommerce_dataset.all_data_exists(config):
@@ -128,40 +131,41 @@ def read_data_frames(config) -> dict[str, pd.Dataframe]:
 
     try:
         # Dict 
-        brazilian_ecommerce_dataframes_dict = {}                                                              # Empty dictionary which we would append keys and values to later
+        brazilian_ecommerce_dataframes_dict = {}                                                              # Empty dictionary which we would later append keys and values to
 
-        brazilian_ecommerce_dataframes_dict ["customer_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_CUSTOMER_DATASET))
+        # Arrange the dictionary with the primary keys and foreign keys in mind informing how I have to load the tables in the database 
         brazilian_ecommerce_dataframes_dict ["geolocation_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_GEOLOCATION_DATASET))
-        brazilian_ecommerce_dataframes_dict ["order_items_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_ORDER_ITEMS_DATASET))
-        brazilian_ecommerce_dataframes_dict ["order_payments_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_ORDER_PAYMENTS_DATASET))
-        brazilian_ecommerce_dataframes_dict ["order_reviews_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_ORDER_REVIEWS_DATASET))
+        brazilian_ecommerce_dataframes_dict ["customer_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_CUSTOMER_DATASET))
+        brazilian_ecommerce_dataframes_dict ["sellers_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_SELLERS_DATASET))
         brazilian_ecommerce_dataframes_dict ["orders_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_ORDERS_DATASET))
         brazilian_ecommerce_dataframes_dict ["products_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_PRODUCTS_DATASET))
-        brazilian_ecommerce_dataframes_dict ["sellers_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_SELLERS_DATASET))
-        brazilian_ecommerce_dataframes_dict ["product_category_name_translation_df"] =  pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.PRODUCT_CATEGORY_NAME_TRANSLATION))
+        brazilian_ecommerce_dataframes_dict ["order_reviews_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_ORDER_REVIEWS_DATASET))
+        brazilian_ecommerce_dataframes_dict ["order_payments_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_ORDER_PAYMENTS_DATASET))
+        brazilian_ecommerce_dataframes_dict ["order_items_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.OLIST_ORDER_ITEMS_DATASET))
+        brazilian_ecommerce_dataframes_dict ["product_category_name_translation_df"] = pd.read_csv(os.path.join(config.BRAZILIAN_DATA_DOWNLOAD_PATH, config.PRODUCT_CATEGORY_NAME_TRANSLATION))
+
+        # There is an ooportunity to refractor this code. We could have fixed the file names in an order under .env file and just extracted it one after the other. 
 
     except Exception as e:
-        print(f"Attempt to read the brazilian eccomerce datasets into a dictionary of dataframes failed: {e}")
-        raise
+        print(f"Attempt to read the brazilian ecommerce datasets into a dictionary of dataframes failed: {e}")
+        raise FileNotFoundError 
     else:
-        print("Brazilian ecommerce datasets succesfully read into brazilian_ecommerce_dataframes_dict.")
-
-    return brazilian_ecommerce_dataframes_dict
+        print("Brazilian ecommerce datasets successfully read into brazilian_ecommerce_dataframes_dict.")
+        return brazilian_ecommerce_dataframes_dict
 
 # Orchestration Function 
 def run_extract_sequence():
     if download_brazilian_ecommerce_dataset():
         brazilian_ecommerce_dataframes_dict = read_data_frames(config)
-
         if brazilian_ecommerce_dataframes_dict is not None:
             print(f"\nExtraction sequence complete. Datasets are ready for Loading Sequence.")
-            return brazilian_ecommerce_dataframes_dict
+            return brazilian_ecommerce_dataframes_dict                                                             
         else:
             print("\nExtraction failed. brazilian_ecomerce-dataframes_dict is empty")
-            raise KeyError                                                                  # Dictionary is empty
-    else:
-        print("\nDownload failed. Unable to complete extraction step.")
-        raise FileNotFoundError
+            raise ValueError                                                # Dictionary is empty
+    else:                                                                                      
+        print("\nDownload failed. Unable to proceed to extraction.")
+        raise RuntimeError 
 
 # Script guard
 if __name__ == "__main__":

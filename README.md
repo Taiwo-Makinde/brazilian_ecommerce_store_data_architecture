@@ -1,5 +1,5 @@
 # brazilian_ecommerce_store_data_architecture
-A real-world data architecture project that extracts a Brazilian ecommerce store's data from Kaggle using its API and loads it into a PostgreSQL database, then migrates and transforms the data into a data warehouse using dbt. Airflow orchestrates the end-to-end pipeline.
+A real-world data architecture project that extracts a Brazilian ecommerce store's datasets from Kaggle using its API and loads it into a PostgreSQL database, then migrates and transforms the data into a data warehouse using dbt. Airflow orchestrates the end-to-end pipeline.
 
 ## Table of Contents
 - [Overview](#overview)

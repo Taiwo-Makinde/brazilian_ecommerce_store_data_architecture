@@ -84,13 +84,13 @@ project-root/
 │           └── star_schema.png
 │
 ├── dags/
-│   └── pipeline_dag.py                   # Airflow scans this folder
+│   └── brazilian_ecommerce_dag.py                   # Airflow scans this folder
 │
 ├── pipeline/
 │   ├── __init__.py
-│   ├── config.py                         # loads .env, exposes db_engine, DBT_PROJECT_DIR, etc.
-│   ├── extract.py                        # run_extract(), download_dataset(), read_data_frames()
-│   ├── load.py                           # create_database(), load_database(), run_load(), run_transform_dbt()
+│   ├── config_brazilian_ecommerce.py                         # loads .env, exposes db_engine, DBT_PROJECT_DIR, etc.
+│   ├── extract_brazilian_ecommerce.py                        # run_extract(), download_dataset(), read_data_frames()
+│   ├── load_brazilian_ecommerce.py                           # create_database(), load_database(), run_load(), run_transform_dbt()
 │   │
 │   └── warehouse/                        # dbt project root
 │       ├── dbt_project.yml
@@ -111,7 +111,7 @@ project-root/
 │       │       └── schema.yml
 │       └── seeds/                        # lookup tables (e.g. status_lookup.csv)
 │
-├── main.py                               # manual entry point
+├── main_brazilian_ecommerce.py                               # manual entry point
 ├── pyproject.toml                        # makes `pipeline` importable from dags/
 └── .gitignore
 ```

@@ -72,7 +72,7 @@ project-root/
 ├── database/
 │   ├── db/
 │   │   ├── migrations/
-│   │   │   └── 001_create_oltp_schema.sql
+│   │   │   └── 001_Brazilian_ecommerce_Schema.sql
 │   │   ├── schema/
 │   │   │   └── db_schema_snapshot.sql    # generated via pg_dump
 │   │   └── diagrams/

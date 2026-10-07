@@ -63,28 +63,27 @@ Each arrow above corresponds to a function or task that can be triggered either 
 ```
 project-root/
 │
-├── config/
-│   ├── .env                              # gitignored
-│   └── .env.example
+├── config/                                                   # gitignored
 │
-├── data/                                 # gitignored — raw CSVs land here
+│
+├── data/                                                     # gitignored — raw CSVs land here
 │
 ├── database/
 │   ├── db/
 │   │   ├── migrations/
 │   │   │   └── 001_Brazilian_ecommerce_Schema.sql
 │   │   ├── schema/
-│   │   │   └── db_schema_snapshot.sql    # generated via pg_dump
+│   │   │   └── complete_db_schema.sql    # generated via pg_dump
 │   │   └── diagrams/
-│   │       └── erd.png
+│   │       └── brazilian_ecommerce_db_erdm.png
 │   └── dwh/
 │       ├── schema/
-│       │   └── dwh_schema_snapshot.sql   # generated via pg_dump
+│       │   └── complete_dwh_schema.sql                       # generated via pg_dump
 │       └── diagrams/
-│           └── star_schema.png
+│           └── brazilian_ecommerce_dwh_erdm.png
 │
 ├── dags/
-│   └── brazilian_ecommerce_dag.py                   # Airflow scans this folder
+│   └── brazilian_ecommerce_dag.py                            # Airflow scans this folder
 │
 ├── pipeline/
 │   ├── __init__.py
@@ -92,7 +91,7 @@ project-root/
 │   ├── extract_brazilian_ecommerce.py                        # run_extract(), download_dataset(), read_data_frames()
 │   ├── load_brazilian_ecommerce.py                           # create_database(), load_database(), run_load(), run_transform_dbt()
 │   │
-│   └── warehouse/                        # dbt project root
+│   └── warehouse/                                            # dbt project root
 │       ├── dbt_project.yml
 │       ├── profiles.yml
 │       ├── models/
@@ -109,10 +108,10 @@ project-root/
 │       │       ├── dim_product.sql
 │       │       ├── fact_orders.sql
 │       │       └── schema.yml
-│       └── seeds/                        # lookup tables (e.g. status_lookup.csv)
+│       └── seeds/                                            # lookup tables (e.g. status_lookup.csv)
 │
 ├── main_brazilian_ecommerce.py                               # manual entry point
-├── pyproject.toml                        # makes `pipeline` importable from dags/
+├── pyproject.toml                                            # makes `pipeline` importable from dags/
 └── .gitignore
 ```
 

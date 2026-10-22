@@ -31,7 +31,7 @@ def create_database(config):
         print(f"Database '{config.DB_NAME}' already exists.")
     
     # Create the schema & tables
-    with open ("001_Brazilian_ecommerce_Schema.sql") as f:
+    with open ("001_brazilian_ecommerce_schema.sql") as f:
         cur.execute(f.read())
     conn.commit()
     cur.close()

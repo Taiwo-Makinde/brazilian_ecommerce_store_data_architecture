@@ -29,14 +29,20 @@ def create_database(config):
         print(f"Database '{config.DB_NAME}' created.")
     else:
         print(f"Database '{config.DB_NAME}' already exists.")
+
     
     # Create the schema & tables
-    with open ("001_brazilian_ecommerce_schema.sql") as f:
-        cur.execute(f.read())
-    conn.commit()
-    cur.close()
-    conn.close()
-    print("Schema Applied.")
+    try:
+        with open (config.BRAZILIAN_ECOMMERCE_DB_SCHEMA, encoding = "utf-8") as f:                                                              
+            cur.execute(f.read())
+        conn.commit()
+        print("Schema Applied.")
+    except Exception as e:
+        conn.rollback()
+        raise 
+    finally:
+        cur.close()
+        conn.close()
 
 
 def load_database(brazilian_ecommerce_dataframes_dict, brazilian_ecommerce_db_engine):
@@ -55,6 +61,8 @@ def load_database(brazilian_ecommerce_dataframes_dict, brazilian_ecommerce_db_en
 
     print("All Table loaded successfully. ")
 
+    # I wrote a separate sql script containing the schema and ran the script before loading the csv. I could have just used python to read the csv datasets or just run a sql COPY COMMAND. But that's not aesthetic enough
+    # Writing my own schema gives me opportunity to define relationships (primary and foreign keys).
 
 # Orchestration
 def run_load_sequence():                                                                            # We do not need to state config and brazilian_ecommerce_db_engine as parameters because they were imported and are now global variables.

@@ -64,6 +64,9 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 brazilian_ecommerce_db_engine = create_engine(f"postgresql+psycopg2://{DB_USER}: {DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
 
+# database creation file 
+BRAZILIAN_ECOMMERCE_DB_SCHEMA = os.getenv("BRAZILIAN_ECOMMERCE_DB_SCHEMA")
+
 # dbt details for orchestration
 DBT_PROJECT_DIR = os.getenv("DBT_PROJECT_DIR")
 
